@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.programming.competition.game.enums.ResponseMessages;
 import com.programming.competition.game.model.JDoodleResponse;
+import com.programming.competition.game.model.Player;
 import com.programming.competition.game.model.SolvedTask;
 import com.programming.competition.game.model.Task;
 import com.programming.competition.game.model.TaskSubmitResponse;
 import com.programming.competition.game.repository.TaskRepository;
+import com.programming.competition.game.service.PlayerService;
 import com.programming.competition.game.service.TaskService;
-import com.programming.competition.game.service.impl.JDoodleService;
-import com.programming.competition.game.service.impl.PlayerServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class TaskServiceImpl implements TaskService<Task,TaskSubmitResponse,Solv
     private TaskRepository taskRepository;
 
     @Autowired
-    private PlayerServiceImpl playerServiceImpl;
+    private PlayerService<Player> playerService;
 
     @Autowired
     private JDoodleService jDoodleService;
@@ -42,8 +42,8 @@ public class TaskServiceImpl implements TaskService<Task,TaskSubmitResponse,Solv
         return taskRepository.getAllTasks().stream()
                 .filter(task -> task.getName().equals(taskName))
                 .findFirst()
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Task with name " + taskName +
-                        " does not exist. Please choose from available tasks " + taskRepository.getTaskNames()));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Task with name %s does not exist. Please choose from available tasks %s",
+                        taskName, taskRepository.getTaskNames())));
     }
 
     public TaskSubmitResponse submitTask(SolvedTask solvedTask) {
@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService<Task,TaskSubmitResponse,Solv
 
     private TaskSubmitResponse isTaskDoneCorrectly(JDoodleResponse jDoodleResponse, SolvedTask solvedTask) {
         if (checkSolution(jDoodleResponse.getOutput(), solvedTask.getName())) {
-            playerServiceImpl.addPlayerScore(solvedTask.getPlayerName(), solvedTask.getName());
+            playerService.addPlayerScore(solvedTask.getPlayerName(), solvedTask.getName());
             return new TaskSubmitResponse(jDoodleResponse.getStatusCode(),
                     ResponseMessages.CORRECT.getMessage());
         }

@@ -11,6 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.NOT_ACCEPTABLE;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Service
 public class PlayerServiceImpl implements PlayerService<Player> {
@@ -19,6 +20,10 @@ public class PlayerServiceImpl implements PlayerService<Player> {
     private PlayerRepository playerRepository;
 
     public void addPlayerScore(String playerName, String taskName) {
+        if (playerName == null) {
+            throw new ResponseStatusException(NOT_FOUND,
+                    ResponseMessages.PLAYER_NOT_FOUND.getMessage());
+        }
         Player currentPlayer = playerRepository.getPlayerList().stream()
                 .filter(player -> player.getName().equals(playerName))
                 .findFirst()
@@ -28,7 +33,7 @@ public class PlayerServiceImpl implements PlayerService<Player> {
 
     private Player createPlayer(String playerName) {
         Player player = new Player(playerName);
-        playerRepository.getPlayerList().add(player);
+        playerRepository.addPlayer(player);
         return player;
     }
 

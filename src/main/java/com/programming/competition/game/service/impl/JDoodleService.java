@@ -14,6 +14,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Slf4j
 public class JDoodleService implements RestService<HttpResponse<String>, SolvedTask> {
@@ -60,6 +61,10 @@ public class JDoodleService implements RestService<HttpResponse<String>, SolvedT
     }
 
     private String prepareRequest(SolvedTask solvedTask) {
+        if (solvedTask.getSolution() == null) {
+            throw new ResponseStatusException(NOT_FOUND,
+                    ResponseMessages.SOLUTION_NOT_FOUND.getMessage());
+        }
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("clientId", clientId);
         jsonObject.addProperty("clientSecret", clientSecret);

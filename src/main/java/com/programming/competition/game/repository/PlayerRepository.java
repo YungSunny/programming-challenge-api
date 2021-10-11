@@ -14,4 +14,8 @@ import java.util.List;
 public class PlayerRepository {
 
     private List<Player> playerList = new ArrayList<>();
+
+    public void addPlayer(Player player) {
+        playerList.add(player);
+    }
 }
