@@ -1,0 +1,17 @@
+[
+  {
+    "name": "First",
+    "description": "Write a program that calculates factorial of 5",
+    "answer": "120"
+  },
+  {
+    "name": "Second",
+    "description": "Write a program that calculates square root of 25. Answer should be double type.",
+    "answer": "5.0"
+  },
+  {
+    "name": "Third",
+    "description": "Write a program that gives a sum of first 3 prime numbers",
+    "answer": "10"
+  }
+]
