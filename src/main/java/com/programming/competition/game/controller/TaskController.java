@@ -21,7 +21,7 @@ import java.util.List;
 public class TaskController {
 
     @Autowired
-    private TaskService<Task,TaskSubmitResponse,SolvedTask> taskService;
+    private TaskService<Task,SolvedTask> taskService;
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Task>> getAllTasks() {

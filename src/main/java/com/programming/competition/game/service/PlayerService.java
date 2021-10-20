@@ -1,7 +1,5 @@
 package com.programming.competition.game.service;
 
-import com.programming.competition.game.model.Player;
-
 import java.util.List;
 
 /**

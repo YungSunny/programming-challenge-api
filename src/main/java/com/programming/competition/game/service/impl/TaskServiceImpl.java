@@ -23,7 +23,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Service
 @Slf4j
-public class TaskServiceImpl implements TaskService<Task,TaskSubmitResponse,SolvedTask> {
+public class TaskServiceImpl implements TaskService<Task,SolvedTask> {
 
     @Autowired
     private TaskRepository taskRepository;

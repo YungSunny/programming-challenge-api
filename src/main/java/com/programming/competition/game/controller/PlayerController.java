@@ -2,7 +2,6 @@ package com.programming.competition.game.controller;
 
 import com.programming.competition.game.model.Player;
 import com.programming.competition.game.service.PlayerService;
-import com.programming.competition.game.service.impl.PlayerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

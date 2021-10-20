@@ -1,11 +1,13 @@
 package com.programming.competition.game.service;
 
+import com.programming.competition.game.model.TaskSubmitResponse;
+
 import java.util.List;
 
 /**
  * Service for challenge task related operations
  */
-public interface TaskService<U,K,Z> {
+public interface TaskService<U,Z> {
 
     /**
      * Gets all available tasks
@@ -28,5 +30,5 @@ public interface TaskService<U,K,Z> {
      *
      * @return formulated response according to the result of given task
      */
-    K submitTask(Z solvedTask);
+    TaskSubmitResponse submitTask(Z solvedTask);
 }
